@@ -49,6 +49,9 @@ words:
   - stapi
   - resp
   - kwargs
+  - csteinle
+  # SmartThings API capability names
+  - colorControl
   - addopts
   - Airdrieonians
   - Alloa
