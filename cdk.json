@@ -1,0 +1,15 @@
+{
+  "app": "python app/app.py",
+  "watch": {
+    "include": ["**"],
+    "exclude": [
+      "README.md",
+      "cdk*.json",
+      "**/__pycache__",
+      "**/.mypy_cache",
+      "tests",
+      "smartapp/node_modules"
+    ]
+  },
+  "context": {}
+}

@@ -1,0 +1,48 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+*.egg-info/
+*.egg
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# mypy
+.mypy_cache/
+
+# pytest
+.pytest_cache/
+htmlcov/
+.coverage
+coverage.xml
+
+# ruff
+.ruff_cache/
+
+# CDK
+cdk.out/
+
+# Node.js (smartapp/)
+smartapp/node_modules/
+smartapp/dist/
+smartapp/.eslintcache
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local

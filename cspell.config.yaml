@@ -1,0 +1,23 @@
+version: "0.2"
+language: en
+words:
+  - smartthings
+  - smartapp
+  - powertools
+  - pydantic
+  - httpx
+  - dynamo
+  - boto
+  - scoreboard
+  - poller
+  - notifier
+  - goalwatcher
+  - scottish
+  - premiership
+  - tennents
+  - lifecycle
+ignorePaths:
+  - "*.lock"
+  - "cdk.out/**"
+  - "smartapp/node_modules/**"
+  - ".venv/**"
