@@ -47,6 +47,7 @@ words:
   # Common abbreviations
   - vars
   - stapi
+  - resp
   - addopts
   - Airdrieonians
   - Alloa
