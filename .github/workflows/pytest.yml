@@ -1,0 +1,26 @@
+name: Tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: uv sync --locked --all-extras --dev
+      - run: uv run pytest --junitxml=test-results.xml
+      - uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: test-results.xml
+      - uses: insightsengineering/coverage-action@v2
+        if: always()
+        with:
+          path: coverage.xml
+          threshold: 80
+          fail: true
