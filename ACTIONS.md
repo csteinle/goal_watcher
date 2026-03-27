@@ -214,34 +214,34 @@ Resolved all 13 mypy strict errors across 2 files. No blanket suppressions — a
 ## TODO — Next Steps
 
 ### Deployment
-- [ ] Create a SmartThings developer account at [developer.smartthings.com](https://developer.smartthings.com/)
-- [ ] Register a new SmartApp project (Automation, WebHook Endpoint)
-- [ ] Bootstrap CDK: `cdk bootstrap`
-- [ ] Deploy the stack: `cdk deploy GoalWatcherStack`
-- [ ] Paste the API Gateway URL into SmartThings Developer Workspace as the webhook endpoint
-- [ ] Set app permissions: `r:devices:*`, `x:devices:*`
-- [ ] Install the SmartApp on phone → select team → pick lights/switches → select competitions
+- [ ] [#9](https://github.com/csteinle/goal_watcher/issues/9) Create a SmartThings developer account at [developer.smartthings.com](https://developer.smartthings.com/)
+- [ ] [#9](https://github.com/csteinle/goal_watcher/issues/9) Register a new SmartApp project (Automation, WebHook Endpoint)
+- [ ] [#9](https://github.com/csteinle/goal_watcher/issues/9) Bootstrap CDK: `cdk bootstrap`
+- [ ] [#9](https://github.com/csteinle/goal_watcher/issues/9) Deploy the stack: `cdk deploy GoalWatcherStack`
+- [ ] [#9](https://github.com/csteinle/goal_watcher/issues/9) Paste the API Gateway URL into SmartThings Developer Workspace as the webhook endpoint
+- [ ] [#9](https://github.com/csteinle/goal_watcher/issues/9) Set app permissions: `r:devices:*`, `x:devices:*`
+- [ ] [#9](https://github.com/csteinle/goal_watcher/issues/9) Install the SmartApp on phone → select team → pick lights/switches → select competitions
 
 ### Testing & Validation
-- [ ] Integration test: invoke fixture checker Lambda manually with a live Scottish match day
-- [ ] Integration test: invoke goal poller Lambda during a live match to verify goal detection
-- [ ] End-to-end test: verify SmartThings devices respond to a detected goal
-- [ ] Test SmartApp installation lifecycle on a real SmartThings hub
-- [ ] Verify OAuth token storage and retrieval between Node.js SmartApp and Python poller
+- [ ] [#10](https://github.com/csteinle/goal_watcher/issues/10) Integration test: invoke fixture checker Lambda manually with a live Scottish match day
+- [ ] [#10](https://github.com/csteinle/goal_watcher/issues/10) Integration test: invoke goal poller Lambda during a live match to verify goal detection
+- [ ] [#10](https://github.com/csteinle/goal_watcher/issues/10) End-to-end test: verify SmartThings devices respond to a detected goal
+- [ ] [#10](https://github.com/csteinle/goal_watcher/issues/10) Test SmartApp installation lifecycle on a real SmartThings hub
+- [ ] [#10](https://github.com/csteinle/goal_watcher/issues/10) Verify OAuth token storage and retrieval between Node.js SmartApp and Python poller
 
 ### Enhancements
-- [ ] Add push notifications via SmartThings notification capability (in addition to device commands)
-- [ ] Add colour support for smart bulbs (flash in team colours — St Johnstone blue)
-- [ ] Add match start/end notifications (not just goals)
-- [ ] Add opponent goal alerts (optional — "the other team scored against you")
-- [ ] Implement OAuth token refresh in the Python poller (currently relies on Node.js SDK context store)
-- [ ] Add a Lambda dependency layer (built from `uv.lock`) instead of bundling deps in Lambda zip
-- [ ] Consider EventBridge Scheduler instead of enable/disable pattern for cleaner poller control
-- [ ] Add match-day awareness to fixture checker (skip polling on non-match days using ESPN calendar)
+- [ ] [#11](https://github.com/csteinle/goal_watcher/issues/11) Add push notifications via SmartThings notification capability (in addition to device commands)
+- [ ] [#12](https://github.com/csteinle/goal_watcher/issues/12) Add colour support for smart bulbs (flash in team colours — St Johnstone blue)
+- [ ] [#13](https://github.com/csteinle/goal_watcher/issues/13) Add match start/end notifications (not just goals)
+- [ ] [#14](https://github.com/csteinle/goal_watcher/issues/14) Add opponent goal alerts (optional — "the other team scored against you")
+- [ ] [#15](https://github.com/csteinle/goal_watcher/issues/15) Implement OAuth token refresh in the Python poller (currently relies on Node.js SDK context store)
+- [ ] [#16](https://github.com/csteinle/goal_watcher/issues/16) Add a Lambda dependency layer (built from `uv.lock`) instead of bundling deps in Lambda zip
+- [ ] [#17](https://github.com/csteinle/goal_watcher/issues/17) Consider EventBridge Scheduler instead of enable/disable pattern for cleaner poller control
+- [ ] [#18](https://github.com/csteinle/goal_watcher/issues/18) Add match-day awareness to fixture checker (skip polling on non-match days using ESPN calendar)
 
 ### Code Quality
-- [ ] Increase test coverage to 80%+ (add Lambda handler tests, DynamoDB helper tests)
+- [ ] [#19](https://github.com/csteinle/goal_watcher/issues/19) Increase test coverage to 80%+ (add Lambda handler tests, DynamoDB helper tests)
 - [x] Add Jest tests for the Node.js SmartApp
 - [x] Run mypy strict on all code and fix any type errors
-- [ ] Add pre-commit hooks validation to CI
-- [ ] Add `taplo` TOML formatting
+- [ ] [#20](https://github.com/csteinle/goal_watcher/issues/20) Add pre-commit hooks validation to CI
+- [ ] [#21](https://github.com/csteinle/goal_watcher/issues/21) Add `taplo` TOML formatting
