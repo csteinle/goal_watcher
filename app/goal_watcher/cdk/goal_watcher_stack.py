@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from aws_cdk import (
     CfnOutput,
     Duration,
@@ -30,7 +32,7 @@ from .constants import (
 class GoalWatcherStack(Stack):
     """Main CDK stack for the Goal Watcher application."""
 
-    def __init__(self, scope: Construct, construct_id: str, **kwargs: object) -> None:
+    def __init__(self, scope: Construct, construct_id: str, **kwargs: Any) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
         # --- DynamoDB Tables ---

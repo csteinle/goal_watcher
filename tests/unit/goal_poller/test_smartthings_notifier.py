@@ -93,32 +93,30 @@ class TestFlashLights:
     @patch("app.goal_watcher.goal_poller.smartthings_notifier.asyncio.sleep", new_callable=AsyncMock)
     async def test_calls_on_off_in_sequence(self, mock_sleep: AsyncMock) -> None:
         notifier = SmartThingsNotifier()
-        notifier.send_device_command = AsyncMock()
 
         device_ids = ["light-1", "light-2"]
-        await notifier.flash_lights("tok_abc", device_ids)
+        with patch.object(notifier, "send_device_command", new_callable=AsyncMock) as mock_cmd:
+            await notifier.flash_lights("tok_abc", device_ids)
 
-        # Each repeat: on for each device, sleep, off for each device, sleep
-        # Then final on for each device
-        # total send_device_command calls = FLASH_REPEAT_COUNT * (2 * len(devices)) + len(devices)
-        expected_calls = FLASH_REPEAT_COUNT * (2 * len(device_ids)) + len(device_ids)
-        assert notifier.send_device_command.call_count == expected_calls
+            # Each repeat: on for each device, sleep, off for each device, sleep
+            # Then final on for each device
+            # total send_device_command calls = FLASH_REPEAT_COUNT * (2 * len(devices)) + len(devices)
+            expected_calls = FLASH_REPEAT_COUNT * (2 * len(device_ids)) + len(device_ids)
+            assert mock_cmd.call_count == expected_calls
 
-        # Verify sleep was called for each on/off cycle
-        assert mock_sleep.call_count == FLASH_REPEAT_COUNT * 2
+            # Verify sleep was called for each on/off cycle
+            assert mock_sleep.call_count == FLASH_REPEAT_COUNT * 2
 
-        # Verify last calls are "on" (leave lights on at end)
-        last_calls = notifier.send_device_command.call_args_list[-len(device_ids) :]
-        for call in last_calls:
-            assert call[0][3] == "on"
+            # Verify last calls are "on" (leave lights on at end)
+            last_calls = mock_cmd.call_args_list[-len(device_ids) :]
+            for call in last_calls:
+                assert call[0][3] == "on"
 
 
 class TestNotifyInstallation:
     @patch("app.goal_watcher.goal_poller.smartthings_notifier.asyncio.sleep", new_callable=AsyncMock)
     async def test_calls_flash_lights_and_toggle_switches(self, _mock_sleep: AsyncMock) -> None:
         notifier = SmartThingsNotifier()
-        notifier.flash_lights = AsyncMock()
-        notifier.toggle_switches = AsyncMock()
 
         installation = _make_installation(
             auth_token="tok_abc",
@@ -126,15 +124,17 @@ class TestNotifyInstallation:
             switch_ids=["switch-1"],
         )
 
-        await notifier.notify_installation(installation, "⚽ GOAL!")
+        with (
+            patch.object(notifier, "flash_lights", new_callable=AsyncMock) as mock_fl,
+            patch.object(notifier, "toggle_switches", new_callable=AsyncMock) as mock_ts,
+        ):
+            await notifier.notify_installation(installation, "⚽ GOAL!")
 
-        notifier.flash_lights.assert_called_once_with("tok_abc", ["light-1"])
-        notifier.toggle_switches.assert_called_once_with("tok_abc", ["switch-1"])
+            mock_fl.assert_called_once_with("tok_abc", ["light-1"])
+            mock_ts.assert_called_once_with("tok_abc", ["switch-1"])
 
     async def test_skips_if_no_auth_token(self) -> None:
         notifier = SmartThingsNotifier()
-        notifier.flash_lights = AsyncMock()
-        notifier.toggle_switches = AsyncMock()
 
         installation = _make_installation(
             auth_token="",
@@ -142,7 +142,11 @@ class TestNotifyInstallation:
             switch_ids=["switch-1"],
         )
 
-        await notifier.notify_installation(installation, "⚽ GOAL!")
+        with (
+            patch.object(notifier, "flash_lights", new_callable=AsyncMock) as mock_fl,
+            patch.object(notifier, "toggle_switches", new_callable=AsyncMock) as mock_ts,
+        ):
+            await notifier.notify_installation(installation, "⚽ GOAL!")
 
-        notifier.flash_lights.assert_not_called()
-        notifier.toggle_switches.assert_not_called()
+            mock_fl.assert_not_called()
+            mock_ts.assert_not_called()
