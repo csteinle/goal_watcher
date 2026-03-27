@@ -1,21 +1,72 @@
 version: "0.2"
 language: en
 words:
-  - smartthings
-  - smartapp
-  - powertools
-  - pydantic
-  - httpx
-  - dynamo
+  - addopts
+  - Airdrieonians
+  - Alloa
+  - Annan
+  - Arbroath
+  - asyncio
+  - autouse
   - boto
-  - scoreboard
-  - poller
-  - notifier
+  - classmethod
+  - colour
+  - colours
+  - conftest
+  - dataclasses
+  - dynamo
+  - EFIF
+  - Elgin
+  - eslintcache
+  - FALK
+  - favourite
+  - functools
+  - FURB
+  - Ginn
   - goalwatcher
-  - scottish
-  - premiership
-  - tennents
+  - HIBS
+  - htmlcov
+  - httpx
+  - insightsengineering
+  - isort
+  - jsii
+  - junitxml
+  - Johnstone
+  - Kelty
+  - Kilbride
+  - LDWWL
   - lifecycle
+  - Mirren
+  - Montrose
+  - moto
+  - mypy
+  - notifier
+  - Partick
+  - Peterhead
+  - PITR
+  - polyfactory
+  - poller
+  - powertools
+  - pycache
+  - pydantic
+  - pyproject
+  - pytest
+  - pytestmark
+  - Raith
+  - redcard
+  - RRFC
+  - scoreboard
+  - scottish
+  - smartapp
+  - smartthings
+  - Stenhousemuir
+  - Stranraer
+  - taplo
+  - tennents
+  - testpaths
+  - venv
+  - WWDWL
+  - yellowcard
 ignorePaths:
   - "*.lock"
   - "cdk.out/**"
