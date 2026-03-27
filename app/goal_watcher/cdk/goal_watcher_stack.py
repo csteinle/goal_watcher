@@ -11,6 +11,7 @@ from aws_cdk import (
     aws_dynamodb as dynamodb,
     aws_events as events,
     aws_events_targets as targets,
+    aws_iam as iam,
     aws_lambda as lambda_,
     aws_logs as logs,
 )
@@ -207,7 +208,12 @@ class GoalWatcherStack(Stack):
         )
 
         # Grant the fixture checker permission to enable/disable the goal poller rule
-        goal_poller_rule.grant(fixture_checker_fn.role, "events:EnableRule", "events:DisableRule")  # type: ignore[union-attr]
+        fixture_checker_fn.add_to_role_policy(
+            iam.PolicyStatement(
+                actions=["events:EnableRule", "events:DisableRule"],
+                resources=[goal_poller_rule.rule_arn],
+            )
+        )
 
         # --- cdk-nag Suppressions ---
 
