@@ -31,3 +31,12 @@ repos:
     rev: v8.18.0
     hooks:
       - id: cspell
+
+  - repo: local
+    hooks:
+      - id: eslint
+        name: ESLint (smartapp)
+        language: system
+        entry: bash -c 'cd smartapp && npm run lint'
+        files: ^smartapp/src/.*\.js$
+        pass_filenames: false

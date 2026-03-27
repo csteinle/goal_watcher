@@ -102,7 +102,32 @@ Built a complete Samsung SmartThings app that triggers home events (flash lights
 
 ---
 
-## TODO — Next Steps
+## 2026-03-27 — Node.js Lambda Tests & Linting
+
+### Summary
+
+Added Jest unit tests (21 passing, 100% coverage) and ESLint configuration for the Node.js SmartApp Lambda. Wired both into CI (separate GitHub Actions workflows) and pre-commit hooks.
+
+### Actions Taken
+
+- `feat:` Created `smartapp/eslint.config.js` — ESLint 9 flat config with `@eslint/js` recommended rules, Node and Jest globals
+- `feat:` Created `smartapp/jest.config.js` — Jest config for ESM (`transform: {}`), 80% coverage threshold, excludes `smartapp.js` (SDK wiring, no business logic)
+- `chore:` Updated `smartapp/package.json` test script to use `--experimental-vm-modules` for ESM compatibility; installed `@eslint/js@^9` devDependency
+- `test:` Added `smartapp/src/__tests__/teams.test.js` — validates shape, uniqueness, and count (42 teams) for `SCOTTISH_TEAMS`
+- `test:` Added `smartapp/src/__tests__/dynamodb-context-store.test.js` — mocks AWS SDK via `jest.unstable_mockModule`, covers get/put/update/delete including null return and merge behaviour
+- `test:` Added `smartapp/src/__tests__/index.test.js` — mocks `smartapp.js`, tests JSON string/object body parsing and all response paths (`res.status().json()`, `res.status().send()`, `res.json()`)
+- `fix:` Renamed unused `reject` → `_reject` in `smartapp/src/index.js` (caught by ESLint `no-unused-vars`)
+- `feat:` Created `.github/workflows/node-lint.yml` — runs ESLint on push/PR to main
+- `feat:` Created `.github/workflows/node-test.yml` — runs Jest with coverage on push/PR to main
+- `chore:` Added local ESLint pre-commit hook to `.pre-commit-config.yaml` scoped to `smartapp/src/**/*.js`
+
+### Commits
+
+- `bf7a90f` feat: add Jest tests and ESLint for Node.js SmartApp Lambda
+
+---
+
+
 
 ### Deployment
 - [ ] Create a SmartThings developer account at [developer.smartthings.com](https://developer.smartthings.com/)
@@ -132,7 +157,7 @@ Built a complete Samsung SmartThings app that triggers home events (flash lights
 
 ### Code Quality
 - [ ] Increase test coverage to 80%+ (add Lambda handler tests, DynamoDB helper tests)
-- [ ] Add Jest tests for the Node.js SmartApp
+- [x] Add Jest tests for the Node.js SmartApp
 - [ ] Run mypy strict on all code and fix any type errors
 - [ ] Add pre-commit hooks validation to CI
 - [ ] Add `taplo` TOML formatting

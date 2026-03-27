@@ -38,6 +38,7 @@ cdk.out/
 smartapp/node_modules/
 smartapp/dist/
 smartapp/.eslintcache
+smartapp/coverage/
 
 # OS
 .DS_Store

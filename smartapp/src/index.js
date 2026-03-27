@@ -3,7 +3,7 @@ import { smartapp } from './smartapp.js';
 export const handler = async (event, _context) => {
     const body = typeof event.body === 'string' ? JSON.parse(event.body) : event.body;
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, _reject) => {
         const req = { body };
         const res = {
             status: (code) => ({
