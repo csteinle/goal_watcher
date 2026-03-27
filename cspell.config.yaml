@@ -1,6 +1,51 @@
 version: "0.2"
-language: en
+language: en-GB
 words:
+  # Project / brand names
+  - smartthings
+  - smartapp
+  - goalwatcher
+  - tennents
+  # AWS / CDK
+  - powertools
+  - boto
+  - jsii
+  - PITR
+  # Python tooling
+  - pydantic
+  - httpx
+  - mypy
+  - pytest
+  - asyncio
+  - polyfactory
+  - isort
+  - venv
+  - pyproject
+  - testpaths
+  - addopts
+  # Ruff / linting
+  - FURB
+  # General tech
+  - poller
+  - lifecycle
+  - timezone
+  # ESPN API
+  - ESPN
+  - espn
+  # Football terms
+  - yellowcard
+  - redcard
+  - shootout
+  # Scottish football team names / abbreviations
+  - Airdrieonians
+  - Mirren
+  - HIBS
+  - RRFC
+  - EFIF
+  # taplo (TOML formatter)
+  - taplo
+  # Common abbreviations
+  - vars
   - addopts
   - Airdrieonians
   - Alloa
