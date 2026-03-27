@@ -7,7 +7,7 @@ AWS-specific conventions for serverless projects using CDK and Lambda. Follow th
 ## AWS CDK
 
 - **AWS CDK with Python** for all infrastructure. CDK app entry point is `app/app.py`.
-- Always apply **cdk-nag** `AwsSolutionsChecks` as an Aspect. Add targeted `NagSuppressions` with clear `reason` strings when suppressing — never blanket-suppress. Always obtain explicit permission when adding supressions, and explain why when asking for this.
+- Always apply **cdk-nag** `AwsSolutionsChecks` as an Aspect. Add targeted `NagSuppressions` with clear `reason` strings when suppressing — never blanket-suppress. Always obtain explicit permission when adding suppressions, and explain why when asking for this.
 - Use **Lambda dependency layers** built from `uv.lock` using a custom `DependencyLayer` construct that exports requirements via `uv export`.
 - Default Lambda config: **ARM_64 architecture**, **JSON logging format**, **Lambda Insights** enabled, explicit **log group** with short retention (1 week) and `DESTROY` removal policy.
 - Use `CfnOutput` for all stack outputs needed by tests or other consumers. Define output names as a `StrEnum` class (e.g., `class Outputs(StrEnum)`) on the Stack class.
