@@ -120,14 +120,98 @@ Added Jest unit tests (21 passing, 100% coverage) and ESLint configuration for t
 - `feat:` Created `.github/workflows/node-lint.yml` — runs ESLint on push/PR to main
 - `feat:` Created `.github/workflows/node-test.yml` — runs Jest with coverage on push/PR to main
 - `chore:` Added local ESLint pre-commit hook to `.pre-commit-config.yaml` scoped to `smartapp/src/**/*.js`
+- `docs:` Added `node.instructions.md` — Copilot instructions for Node.js conventions (ESM, ESLint 9, Jest ESM mocking)
+- `chore:` Added `smartapp/coverage/` to `.gitignore`
 
 ### Commits
 
 - `bf7a90f` feat: add Jest tests and ESLint for Node.js SmartApp Lambda
+- `48fb2fc` docs: add Node.js Copilot instructions
+- `abd7e44` chore: ignore smartapp/coverage/ in .gitignore
 
 ---
 
+## 2026-03-27 — Git Workflow Instructions
 
+### Summary
+
+Added a Copilot instructions file codifying the project's git workflow: all work in feature branches, moderately verbose commit messages, every branch raised as a PR.
+
+### Actions Taken
+
+- `docs:` Created `.github/instructions/git-workflow.instructions.md` — branching conventions, commit message format (conventional prefix + bullet-point body), PR requirements, co-author trailer
+
+### Commits
+
+- `214c440` docs: add git workflow Copilot instructions
+
+---
+
+## 2026-03-27 — cspell en-GB and Word List Tidy
+
+### Summary
+
+Switched cspell from `en` (US+GB combined) to `en-GB` for consistent British English spell checking, and cleaned up the custom word list.
+
+### Actions Taken
+
+- `chore:` Changed `language: en` → `language: en-GB` in `cspell.config.yaml`
+- `chore:` Removed standard British English words no longer needing custom entries: `dynamo`, `scoreboard`, `notifier`, `scottish`, `premiership`
+- `chore:` Added tech/project terms not in en-GB: tooling (`mypy`, `pytest`, `asyncio`, etc.), AWS (`jsii`, `PITR`), ESPN, football domain terms, Scottish team abbreviations
+- `docs:` Added inline comments to all custom word entries
+- `docs:` Added `node.instructions.md` to PR #5
+
+### Commits
+
+- `f73169f` chore: switch cspell to en-GB and trim custom word list
+- `d2c4172` docs: add Node.js Copilot instructions
+
+---
+
+## 2026-03-27 — README Mermaid Architecture Diagram
+
+### Summary
+
+Replaced the ASCII art architecture diagram in the README with a native Mermaid flowchart, and updated several sections to reflect current project state.
+
+### Actions Taken
+
+- `docs:` Replaced ASCII architecture diagram with a Mermaid `flowchart LR` showing all components with labelled edges
+- `docs:` Updated Two-Poller Design description to clarify enable/disable behaviour
+- `docs:` Updated prerequisites: Node.js `22+` → `LTS`
+- `docs:` Added Node.js dev commands (`npm test`, `npm run lint`) to Development section
+- `docs:` Expanded `smartapp/src/` in project structure to show individual files
+- `docs:` Added step 5 to How It Works (Fixture Checker disables Goal Poller when match ends)
+- `chore:` Added `stapi` to cspell word list (Mermaid node ID in README)
+
+### Commits
+
+- `d2c89d1` docs: replace ASCII architecture diagram with Mermaid
+
+---
+
+## 2026-03-27 — mypy Strict Fixes
+
+### Summary
+
+Resolved all 13 mypy strict errors across 2 files. No blanket suppressions — all genuine type fixes.
+
+### Actions Taken
+
+- `fix:` Changed `**kwargs: object` → `**kwargs: Any` in `GoalWatcherStack.__init__` — CDK `Stack.__init__` has many typed keyword arguments that are invariant against `object`
+- `fix:` Replaced 5 direct method assignments (`notifier.method = AsyncMock()`) with `patch.object()` context managers in `test_smartthings_notifier.py` — `[method-assign]` disallowed under mypy strict
+
+### Bugs Found & Fixed
+
+- Direct method assignment on typed instances (`notifier.send_device_command = AsyncMock()`) silently worked at runtime but violates mypy strict — refactored to `patch.object`
+
+### Commits
+
+- `9d2516b` fix: resolve all mypy strict errors
+
+---
+
+## TODO — Next Steps
 
 ### Deployment
 - [ ] Create a SmartThings developer account at [developer.smartthings.com](https://developer.smartthings.com/)
@@ -136,7 +220,7 @@ Added Jest unit tests (21 passing, 100% coverage) and ESLint configuration for t
 - [ ] Deploy the stack: `cdk deploy GoalWatcherStack`
 - [ ] Paste the API Gateway URL into SmartThings Developer Workspace as the webhook endpoint
 - [ ] Set app permissions: `r:devices:*`, `x:devices:*`
-- [ ] Install the SmartApp on phone → select St Johnstone → pick lights/switches → select competitions
+- [ ] Install the SmartApp on phone → select team → pick lights/switches → select competitions
 
 ### Testing & Validation
 - [ ] Integration test: invoke fixture checker Lambda manually with a live Scottish match day
@@ -158,6 +242,6 @@ Added Jest unit tests (21 passing, 100% coverage) and ESLint configuration for t
 ### Code Quality
 - [ ] Increase test coverage to 80%+ (add Lambda handler tests, DynamoDB helper tests)
 - [x] Add Jest tests for the Node.js SmartApp
-- [ ] Run mypy strict on all code and fix any type errors
+- [x] Run mypy strict on all code and fix any type errors
 - [ ] Add pre-commit hooks validation to CI
 - [ ] Add `taplo` TOML formatting
