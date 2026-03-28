@@ -4,17 +4,17 @@ version = "0.1.0"
 description = "SmartThings app that triggers home events when a Scottish football team scores a goal"
 requires-python = ">=3.14"
 dependencies = [
-    "aws-cdk-lib>=2.180.0",
     "aws-lambda-powertools>=3.7.0",
     "boto3>=1.42.77",
-    "cdk-nag>=2.35.0",
-    "constructs>=10.4.0",
     "httpx>=0.28.0",
     "pydantic>=2.11.0",
 ]
 
 [dependency-groups]
 dev = [
+    "aws-cdk-lib>=2.180.0",
+    "cdk-nag>=2.35.0",
+    "constructs>=10.4.0",
     "faker>=40.11.1",
     "mypy>=1.15.0",
     "polyfactory>=2.19.0",

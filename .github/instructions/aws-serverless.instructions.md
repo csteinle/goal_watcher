@@ -8,13 +8,97 @@ AWS-specific conventions for serverless projects using CDK and Lambda. Follow th
 
 - **AWS CDK with Python** for all infrastructure. CDK app entry point is `app/app.py`.
 - Always apply **cdk-nag** `AwsSolutionsChecks` as an Aspect. Add targeted `NagSuppressions` with clear `reason` strings when suppressing — never blanket-suppress. Always obtain explicit permission when adding suppressions, and explain why when asking for this.
-- Use **Lambda dependency layers** built from `uv.lock` using a custom `DependencyLayer` construct that exports requirements via `uv export`.
+- Use **Lambda dependency layers** built from `uv.lock` using a custom `DependencyLayer` construct that exports requirements via `uv export`. See the **Lambda Dependency Layer** section below for full details.
 - Default Lambda config: **ARM_64 architecture**, **JSON logging format**, **Lambda Insights** enabled, explicit **log group** with short retention (1 week) and `DESTROY` removal policy.
 - Use `CfnOutput` for all stack outputs needed by tests or other consumers. Define output names as a `StrEnum` class (e.g., `class Outputs(StrEnum)`) on the Stack class.
 - Use `RemovalPolicy.DESTROY` for scratch/dev resources. Enable point-in-time recovery for DynamoDB tables.
 - Enforce SSL on SQS queues (`enforce_ssl=True`).
 
-## Lambda Functions
+## Lambda Dependency Layer
+
+The `DependencyLayer` construct (lives at `app/<project>/cdk/dependency_layer.py`) bundles Python runtime dependencies from `uv.lock` into a Lambda layer so they are not included in the function code asset.
+
+### How it works
+
+1. **Local step** — `DependencyLayer.Bundler.try_bundle()` runs `uv export --no-dev --frozen` to generate `build/requirements.txt` from `uv.lock`. Returns `False` so CDK continues to the Docker step.
+2. **Docker step** — CDK runs `pip3 install -r requirements.txt -t /asset-output/python` inside the Lambda runtime image, producing an architecture-correct layer package.
+3. The layer is fingerprinted against `uv.lock` so it is only rebuilt when dependencies change.
+
+### pyproject.toml structure
+
+Keep CDK and dev tooling in `[dependency-groups] dev`. Keep only Lambda runtime deps in `[project] dependencies` — these are what `uv export --no-dev` exports into the layer:
+
+```toml
+[project]
+dependencies = [
+    "aws-lambda-powertools>=...",
+    "boto3>=...",
+    "pydantic>=...",
+    # any other runtime-only deps
+]
+
+[dependency-groups]
+dev = [
+    "aws-cdk-lib>=...",
+    "cdk-nag>=...",
+    "constructs>=...",
+    "mypy>=...",
+    "pytest>=...",
+    # ...
+]
+```
+
+If a Lambda needs a subset of deps, define a named group and pass `dependency_group="lambda"` to `DependencyLayer`.
+
+### Usage in a stack
+
+```python
+from .dependency_layer import DependencyLayer
+
+LAMBDA_RUNTIME = lambda_.Runtime.PYTHON_3_13
+LAMBDA_ARCHITECTURE = lambda_.Architecture.ARM_64
+
+dependency_layer = DependencyLayer(
+    self,
+    "MyDependencyLayer",
+    runtime=LAMBDA_RUNTIME,
+    architecture=LAMBDA_ARCHITECTURE,
+    # dependency_group="lambda"  # omit to export all non-dev deps
+)
+
+fn = lambda_.Function(
+    self, "MyFunction",
+    runtime=LAMBDA_RUNTIME,
+    architecture=LAMBDA_ARCHITECTURE,
+    layers=[dependency_layer],
+    code=lambda_.Code.from_asset("app", exclude=["**/cdk/**", "**/__pycache__"]),
+    handler="my_project.my_lambda.app.handler",
+    ...
+)
+```
+
+### Stubbing in CDK unit tests
+
+The real `DependencyLayer` requires Docker (for bundling). Stub it in test conftest so tests run without Docker:
+
+```python
+import tempfile
+from unittest.mock import patch
+from aws_cdk import aws_lambda as lambda_
+
+class _StubDependencyLayer(lambda_.LayerVersion):
+    def __init__(self, scope, id, **_kwargs):
+        super().__init__(scope, id, code=lambda_.Code.from_asset(tempfile.mkdtemp()))
+
+@pytest.fixture
+def template() -> Template:
+    with patch("app.<project>.cdk.<stack_module>.DependencyLayer", _StubDependencyLayer):
+        app = App()
+        stack = MyStack(app, "TestStack")
+    return Template.from_stack(stack)
+```
+
+
 
 - **Always use AWS Lambda Powertools:**
   - `Logger` with `@logger.inject_lambda_context(clear_state=True)` decorator.

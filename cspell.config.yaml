@@ -49,6 +49,7 @@ words:
   - stapi
   - resp
   - kwargs
+  - parsable
   - addopts
   - Airdrieonians
   - Alloa

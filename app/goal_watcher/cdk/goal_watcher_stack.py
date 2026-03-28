@@ -27,6 +27,10 @@ from .constants import (
     MATCH_STATE_TABLE_NAME,
     Outputs,
 )
+from .dependency_layer import DependencyLayer
+
+LAMBDA_RUNTIME = lambda_.Runtime.PYTHON_3_13
+LAMBDA_ARCHITECTURE = lambda_.Architecture.ARM_64
 
 
 class GoalWatcherStack(Stack):
@@ -34,6 +38,15 @@ class GoalWatcherStack(Stack):
 
     def __init__(self, scope: Construct, construct_id: str, **kwargs: Any) -> None:
         super().__init__(scope, construct_id, **kwargs)
+
+        # --- Shared Lambda dependency layer ---
+
+        dependency_layer = DependencyLayer(
+            self,
+            "GoalWatcherDependencyLayer",
+            runtime=LAMBDA_RUNTIME,
+            architecture=LAMBDA_ARCHITECTURE,
+        )
 
         # --- DynamoDB Tables ---
 
@@ -79,7 +92,7 @@ class GoalWatcherStack(Stack):
             self,
             "FixtureCheckerFunction",
             function_name="goal-watcher-fixture-checker",
-            runtime=lambda_.Runtime.PYTHON_3_13,
+            runtime=LAMBDA_RUNTIME,
             handler="app.goal_watcher.fixture_checker.app.handler",
             code=lambda_.Code.from_asset(
                 "app",
@@ -89,7 +102,8 @@ class GoalWatcherStack(Stack):
                     "goal_watcher/goal_poller/**",
                 ],
             ),
-            architecture=lambda_.Architecture.ARM_64,
+            layers=[dependency_layer],
+            architecture=LAMBDA_ARCHITECTURE,
             memory_size=256,
             timeout=Duration.seconds(120),
             environment={
@@ -113,7 +127,7 @@ class GoalWatcherStack(Stack):
             self,
             "GoalPollerFunction",
             function_name="goal-watcher-goal-poller",
-            runtime=lambda_.Runtime.PYTHON_3_13,
+            runtime=LAMBDA_RUNTIME,
             handler="app.goal_watcher.goal_poller.app.handler",
             code=lambda_.Code.from_asset(
                 "app",
@@ -123,7 +137,8 @@ class GoalWatcherStack(Stack):
                     "goal_watcher/fixture_checker/**",
                 ],
             ),
-            architecture=lambda_.Architecture.ARM_64,
+            layers=[dependency_layer],
+            architecture=LAMBDA_ARCHITECTURE,
             memory_size=256,
             timeout=Duration.seconds(120),
             environment={
@@ -153,7 +168,7 @@ class GoalWatcherStack(Stack):
                 "smartapp",
                 exclude=["node_modules/.cache"],
             ),
-            architecture=lambda_.Architecture.ARM_64,
+            architecture=LAMBDA_ARCHITECTURE,
             memory_size=256,
             timeout=Duration.seconds(30),
             environment={

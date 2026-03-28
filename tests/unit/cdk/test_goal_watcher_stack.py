@@ -71,6 +71,29 @@ class TestDynamoDBTables:
         )
 
 
+class TestLambdaLayer:
+    """Lambda layer resource assertions."""
+
+    def test_dependency_layer_created(self, template: Template) -> None:
+        template.resource_count_is("AWS::Lambda::LayerVersion", 1)
+
+    def test_python_functions_use_dependency_layer(self, template: Template) -> None:
+        template.has_resource_properties(
+            "AWS::Lambda::Function",
+            {"FunctionName": "goal-watcher-fixture-checker", "Layers": Match.any_value()},
+        )
+        template.has_resource_properties(
+            "AWS::Lambda::Function",
+            {"FunctionName": "goal-watcher-goal-poller", "Layers": Match.any_value()},
+        )
+
+    def test_smartapp_has_no_layer(self, template: Template) -> None:
+        template.has_resource_properties(
+            "AWS::Lambda::Function",
+            {"FunctionName": "goal-watcher-smartapp", "Layers": Match.absent()},
+        )
+
+
 class TestLambdaFunctions:
     """Lambda function resource assertions."""
 

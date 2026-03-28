@@ -31,7 +31,6 @@ repos:
     rev: v8.18.0
     hooks:
       - id: cspell
-
   - repo: local
     hooks:
       - id: eslint
