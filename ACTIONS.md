@@ -237,7 +237,22 @@ Removed the `scripts/create-issues.sh` bootstrapping helper (issues already exis
 
 ---
 
+## 2026-03-28 — Fix PR #8 Review Comments
+
+### Summary
+
+Addressed two review comments on PR #8: deduplicated the cspell word list and added a clarifying note about hard-linked issue numbers in the TODO section.
+
+### Actions Taken
+
+- `chore:` Deduplicated `cspell.config.yaml` word list — merged unique entries from the stale unsorted second block (Scottish team names, Python testing terms, CI tool names, football form abbreviations) into the organised first section, then removed the duplicate block entirely
+- `docs:` Added italicised note below `## TODO — Next Steps` heading in `ACTIONS.md` clarifying that checklist items link to existing issues in this repo and that forks must update links
+
+---
+
 ## TODO — Next Steps
+
+_Note: The checklist items below are hard-linked to existing issues in this repository (currently #9–#21). If you fork this project or start fresh, re-create the issues and update these links accordingly._
 
 ### Deployment
 - [ ] [#9](https://github.com/csteinle/goal_watcher/issues/9) Create a SmartThings developer account at [developer.smartthings.com](https://developer.smartthings.com/)

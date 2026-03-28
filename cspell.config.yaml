@@ -6,6 +6,7 @@ words:
   - smartapp
   - goalwatcher
   - tennents
+  - csteinle
   # AWS / CDK
   - powertools
   - boto
@@ -23,12 +24,24 @@ words:
   - pyproject
   - testpaths
   - addopts
+  - autouse
+  - classmethod
+  - conftest
+  - dataclasses
+  - functools
+  - htmlcov
+  - junitxml
+  - moto
+  - pycache
+  - pytestmark
   # Ruff / linting
   - FURB
   # General tech
   - poller
   - lifecycle
   - timezone
+  - eslintcache
+  - insightsengineering
   # ESPN API
   - ESPN
   - espn
@@ -36,12 +49,29 @@ words:
   - yellowcard
   - redcard
   - shootout
+  - LDWWL
+  - WWDWL
   # Scottish football team names / abbreviations
   - Airdrieonians
-  - Mirren
-  - HIBS
-  - RRFC
+  - Alloa
+  - Annan
+  - Arbroath
   - EFIF
+  - Elgin
+  - FALK
+  - Ginn
+  - HIBS
+  - Johnstone
+  - Kelty
+  - Kilbride
+  - Mirren
+  - Montrose
+  - Partick
+  - Peterhead
+  - Raith
+  - RRFC
+  - Stenhousemuir
+  - Stranraer
   # taplo (TOML formatter)
   - taplo
   # Common abbreviations
@@ -49,75 +79,8 @@ words:
   - stapi
   - resp
   - kwargs
-  - csteinle
   # SmartThings API capability names
   - colorControl
-  - addopts
-  - Airdrieonians
-  - Alloa
-  - Annan
-  - Arbroath
-  - asyncio
-  - autouse
-  - boto
-  - classmethod
-  - colour
-  - colours
-  - conftest
-  - dataclasses
-  - dynamo
-  - EFIF
-  - Elgin
-  - eslintcache
-  - FALK
-  - favourite
-  - functools
-  - FURB
-  - Ginn
-  - goalwatcher
-  - HIBS
-  - htmlcov
-  - httpx
-  - insightsengineering
-  - isort
-  - jsii
-  - junitxml
-  - Johnstone
-  - Kelty
-  - Kilbride
-  - LDWWL
-  - lifecycle
-  - Mirren
-  - Montrose
-  - moto
-  - mypy
-  - notifier
-  - Partick
-  - Peterhead
-  - PITR
-  - polyfactory
-  - poller
-  - powertools
-  - pycache
-  - pydantic
-  - pyproject
-  - pytest
-  - pytestmark
-  - Raith
-  - redcard
-  - RRFC
-  - scoreboard
-  - scottish
-  - smartapp
-  - smartthings
-  - Stenhousemuir
-  - Stranraer
-  - taplo
-  - tennents
-  - testpaths
-  - venv
-  - WWDWL
-  - yellowcard
 ignorePaths:
   - "*.lock"
   - "cdk.out/**"
