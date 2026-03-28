@@ -211,6 +211,29 @@ Resolved all 13 mypy strict errors across 2 files. No blanket suppressions — a
 
 ---
 
+## 2026-03-28 — Lambda Dependency Layer
+
+### Summary
+
+Added a `DependencyLayer` CDK construct that bundles Python runtime dependencies from `uv.lock` into a Lambda layer. Restructured `pyproject.toml` to separate CDK dev deps from Lambda runtime deps, and documented the full pattern in the AWS Copilot instructions.
+
+### Actions Taken
+
+- `feat:` Created `app/goal_watcher/cdk/dependency_layer.py` — `DependencyLayer` construct; local step runs `uv export --no-dev --frozen` to produce `requirements.txt`, Docker step runs `pip3 install` into `/asset-output/python` for the correct Lambda architecture
+- `chore:` Moved `aws-cdk-lib`, `cdk-nag`, `constructs` from `[project]` to `[dependency-groups] dev` in `pyproject.toml` so `uv export --no-dev` only captures Lambda runtime deps
+- `feat:` Updated `GoalWatcherStack` to create a shared `DependencyLayer` and attach it to the fixture-checker and goal-poller Lambdas; extracted `LAMBDA_RUNTIME`/`LAMBDA_ARCHITECTURE` module-level constants
+- `test:` Stubbed `DependencyLayer` in CDK unit test conftest to avoid requiring Docker; added `TestLambdaLayer` class asserting layer exists, Python fns use it, SmartApp does not
+- `docs:` Added full `DependencyLayer` documentation to `aws-serverless.instructions.md` (construct design, pyproject.toml structure, usage example, test stub pattern)
+- `docs:` Updated `actions-log.instructions.md` — ACTIONS.md now updated per PR rather than per session
+- `chore:` Added `parsable` to cspell word list (flagged in python instructions)
+- `feat:` ~~Add a Lambda dependency layer (built from `uv.lock`) instead of bundling deps in Lambda zip~~ — **completed, closes [#14](https://github.com/csteinle/goal_watcher/issues/14)**
+
+### Commits
+
+- `c19edaa` feat: add Lambda dependency layer built from uv.lock
+
+---
+
 ## TODO — Next Steps
 
 ### Deployment
@@ -235,7 +258,7 @@ Resolved all 13 mypy strict errors across 2 files. No blanket suppressions — a
 - [ ] [#13](https://github.com/csteinle/goal_watcher/issues/13) Add match start/end notifications (not just goals)
 - [ ] [#15](https://github.com/csteinle/goal_watcher/issues/15) Add opponent goal alerts (optional — "the other team scored against you")
 - [ ] [#17](https://github.com/csteinle/goal_watcher/issues/17) Implement OAuth token refresh in the Python poller (currently relies on Node.js SDK context store)
-- [ ] [#14](https://github.com/csteinle/goal_watcher/issues/14) Add a Lambda dependency layer (built from `uv.lock`) instead of bundling deps in Lambda zip
+- [x] [#14](https://github.com/csteinle/goal_watcher/issues/14) Add a Lambda dependency layer (built from `uv.lock`) instead of bundling deps in Lambda zip
 - [ ] [#16](https://github.com/csteinle/goal_watcher/issues/16) Consider EventBridge Scheduler instead of enable/disable pattern for cleaner poller control
 - [ ] [#19](https://github.com/csteinle/goal_watcher/issues/19) Add match-day awareness to fixture checker (skip polling on non-match days using ESPN calendar)
 

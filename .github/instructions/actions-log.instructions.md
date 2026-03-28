@@ -6,15 +6,15 @@ Maintain the `ACTIONS.md` file at the project root as a living record of all dev
 
 ## Rules
 
-- **Update `ACTIONS.md` after every session** that makes changes to the codebase.
-- Each session entry should include:
+- **Update `ACTIONS.md` for every PR** before it is raised (or as a final commit on the branch).
+- Each PR entry should include:
   - **Date** as a heading (e.g., `## 2026-03-28 — Feature Name`)
   - **Summary** — one or two sentences describing what was done
   - **Actions Taken** — bullet list of specific changes, grouped by phase or component
   - **Bugs Found & Fixed** — if any were discovered and resolved
   - **Commits** — list the git commit hashes and messages created during the session
 - **Keep the TODO section current** — check off completed items, add new ones as they arise.
-- When completing a TODO item, move it from the TODO section into the relevant session's "Actions Taken" with a note that it was completed.
+- When completing a TODO item, move it from the TODO section into the relevant entry's "Actions Taken" with a note that it was completed.
 - Use conventional commit prefixes in action descriptions where applicable (`feat:`, `fix:`, `test:`, `docs:`, `chore:`).
 
 ## Format
