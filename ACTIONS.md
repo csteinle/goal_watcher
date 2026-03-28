@@ -223,24 +223,24 @@ Resolved all 13 mypy strict errors across 2 files. No blanket suppressions — a
 - [ ] [#9](https://github.com/csteinle/goal_watcher/issues/9) Install the SmartApp on phone → select team → pick lights/switches → select competitions
 
 ### Testing & Validation
-- [ ] [#10](https://github.com/csteinle/goal_watcher/issues/10) Integration test: invoke fixture checker Lambda manually with a live Scottish match day
-- [ ] [#10](https://github.com/csteinle/goal_watcher/issues/10) Integration test: invoke goal poller Lambda during a live match to verify goal detection
-- [ ] [#10](https://github.com/csteinle/goal_watcher/issues/10) End-to-end test: verify SmartThings devices respond to a detected goal
-- [ ] [#10](https://github.com/csteinle/goal_watcher/issues/10) Test SmartApp installation lifecycle on a real SmartThings hub
-- [ ] [#10](https://github.com/csteinle/goal_watcher/issues/10) Verify OAuth token storage and retrieval between Node.js SmartApp and Python poller
+- [ ] [#11](https://github.com/csteinle/goal_watcher/issues/11) Integration test: invoke fixture checker Lambda manually with a live Scottish match day
+- [ ] [#11](https://github.com/csteinle/goal_watcher/issues/11) Integration test: invoke goal poller Lambda during a live match to verify goal detection
+- [ ] [#11](https://github.com/csteinle/goal_watcher/issues/11) End-to-end test: verify SmartThings devices respond to a detected goal
+- [ ] [#11](https://github.com/csteinle/goal_watcher/issues/11) Test SmartApp installation lifecycle on a real SmartThings hub
+- [ ] [#11](https://github.com/csteinle/goal_watcher/issues/11) Verify OAuth token storage and retrieval between Node.js SmartApp and Python poller
 
 ### Enhancements
-- [ ] [#11](https://github.com/csteinle/goal_watcher/issues/11) Add push notifications via SmartThings notification capability (in addition to device commands)
-- [ ] [#12](https://github.com/csteinle/goal_watcher/issues/12) Add colour support for smart bulbs (flash in team colours — St Johnstone blue)
+- [ ] [#12](https://github.com/csteinle/goal_watcher/issues/12) Add push notifications via SmartThings notification capability (in addition to device commands)
+- [ ] [#10](https://github.com/csteinle/goal_watcher/issues/10) Add colour support for smart bulbs (flash in team colours — St Johnstone blue)
 - [ ] [#13](https://github.com/csteinle/goal_watcher/issues/13) Add match start/end notifications (not just goals)
-- [ ] [#14](https://github.com/csteinle/goal_watcher/issues/14) Add opponent goal alerts (optional — "the other team scored against you")
-- [ ] [#15](https://github.com/csteinle/goal_watcher/issues/15) Implement OAuth token refresh in the Python poller (currently relies on Node.js SDK context store)
-- [ ] [#16](https://github.com/csteinle/goal_watcher/issues/16) Add a Lambda dependency layer (built from `uv.lock`) instead of bundling deps in Lambda zip
-- [ ] [#17](https://github.com/csteinle/goal_watcher/issues/17) Consider EventBridge Scheduler instead of enable/disable pattern for cleaner poller control
-- [ ] [#18](https://github.com/csteinle/goal_watcher/issues/18) Add match-day awareness to fixture checker (skip polling on non-match days using ESPN calendar)
+- [ ] [#15](https://github.com/csteinle/goal_watcher/issues/15) Add opponent goal alerts (optional — "the other team scored against you")
+- [ ] [#17](https://github.com/csteinle/goal_watcher/issues/17) Implement OAuth token refresh in the Python poller (currently relies on Node.js SDK context store)
+- [ ] [#14](https://github.com/csteinle/goal_watcher/issues/14) Add a Lambda dependency layer (built from `uv.lock`) instead of bundling deps in Lambda zip
+- [ ] [#16](https://github.com/csteinle/goal_watcher/issues/16) Consider EventBridge Scheduler instead of enable/disable pattern for cleaner poller control
+- [ ] [#19](https://github.com/csteinle/goal_watcher/issues/19) Add match-day awareness to fixture checker (skip polling on non-match days using ESPN calendar)
 
 ### Code Quality
-- [ ] [#19](https://github.com/csteinle/goal_watcher/issues/19) Increase test coverage to 80%+ (add Lambda handler tests, DynamoDB helper tests)
+- [ ] [#18](https://github.com/csteinle/goal_watcher/issues/18) Increase test coverage to 80%+ (add Lambda handler tests, DynamoDB helper tests)
 - [x] Add Jest tests for the Node.js SmartApp
 - [x] Run mypy strict on all code and fix any type errors
 - [ ] [#20](https://github.com/csteinle/goal_watcher/issues/20) Add pre-commit hooks validation to CI
