@@ -48,6 +48,7 @@ words:
   - vars
   - stapi
   - resp
+  - kwargs
   - addopts
   - Airdrieonians
   - Alloa
