@@ -233,7 +233,7 @@ Removed the `scripts/create-issues.sh` bootstrapping helper (issues already exis
 
 ### Commits
 
-- TBD
+- `d4ac99c` chore: remove helper script and fix issue links in ACTIONS.md
 
 ---
 
